@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ """
 from models.base_model import BaseModel
+from models import storage
 import unittest
 import datetime
 from uuid import UUID
@@ -77,8 +78,8 @@ class test_basemodel(unittest.TestCase):
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
-            new = self.value(**n)
+        new = self.value(**n)
+        self.assertGreater(len(storage._FileStorage__objects), 0)
 
     def test_id(self):
         """ """
