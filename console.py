@@ -126,6 +126,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         kwargs = []
+        ktd = []
         if len(args) > 1:
             kwargs = re.findall(r'(\S+)=(\S+)', args[1])
             kwargs = dict(kwargs)
@@ -136,10 +137,13 @@ class HBNBCommand(cmd.Cmd):
                 elif re.match(r'-?\d+[^\.]', v):
                     # integer
                     kwargs[k] = int(v)
-                else:
+                elif re.match(r'^"\S+"$', v):
                     v = v.strip('"').replace('\\', '').replace('_', ' ')
                     kwargs[k] = v
-
+                else:
+                    ktd.append(k)
+        for k in ktd:
+            del(kwargs[k])
         new_instance = self.classes[args[0]](**kwargs)
         storage.new(new_instance)
         storage.save()
