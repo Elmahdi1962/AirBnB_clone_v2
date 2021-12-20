@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 
-from sys import settrace
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models import storage_type
