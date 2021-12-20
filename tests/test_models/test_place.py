@@ -1,69 +1,43 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+''' module for place tests '''
+from unittest import TestCase
+import json
+import re
+from uuid import UUID, uuid4
+from datetime import datetime
+from time import sleep
+
+from models.base_model import BaseModel
 from models.place import Place
 
 
-class test_Place(test_basemodel):
-    """ """
+class TestPlace(TestCase):
+    ''' tests Place class '''
+    def test_9(self):
+        ''' task 9 tests '''
+        self.assertTrue(issubclass(Place, BaseModel))
+        self.assertEqual(Place.city_id, '')
+        self.assertEqual(Place.user_id, '')
+        self.assertEqual(Place.name, '')
+        self.assertEqual(Place.description, '')
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Place"
-        self.value = Place
+        self.assertTrue(type(Place.number_rooms) is int)
+        self.assertEqual(Place.number_rooms, 0)
 
-    def test_city_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.city_id), str)
+        self.assertTrue(type(Place.number_bathrooms) is int)
+        self.assertEqual(Place.number_bathrooms, 0)
 
-    def test_user_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertTrue(type(Place.max_guest) is int)
+        self.assertEqual(Place.max_guest, 0)
 
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertTrue(type(Place.price_by_night) is int)
+        self.assertEqual(Place.price_by_night, 0)
 
-    def test_description(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.description), str)
+        self.assertTrue(type(Place.latitude) is float)
+        self.assertEqual(Place.latitude, 0.0)
 
-    def test_number_rooms(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.number_rooms), int)
+        self.assertTrue(type(Place.longitude) is float)
+        self.assertEqual(Place.longitude, 0.0)
 
-    def test_number_bathrooms(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.number_bathrooms), int)
-
-    def test_max_guest(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.max_guest), int)
-
-    def test_price_by_night(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.price_by_night), int)
-
-    def test_latitude(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), float)
-
-    def test_longitude(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), float)
-
-    def test_amenity_ids(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.amenity_ids), list)
+        self.assertTrue(type(Place.amenity_ids) is list)
+        self.assertEqual(Place.amenity_ids, [])

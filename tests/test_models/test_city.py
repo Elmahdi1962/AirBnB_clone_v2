@@ -1,24 +1,20 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+''' module for city tests '''
+from unittest import TestCase
+import json
+import re
+from uuid import UUID, uuid4
+from datetime import datetime
+from time import sleep
+
+from models.base_model import BaseModel
 from models.city import City
 
 
-class test_City(test_basemodel):
-    """ """
-
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "City"
-        self.value = City
-
-    def test_state_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.state_id), str)
-
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+class TestCity(TestCase):
+    ''' tests City class '''
+    def test_9(self):
+        ''' task 9 tests '''
+        self.assertTrue(issubclass(City, BaseModel))
+        self.assertEqual(City.state_id, '')
+        self.assertEqual(City.name, '')
