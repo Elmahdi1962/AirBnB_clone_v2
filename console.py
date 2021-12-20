@@ -3,6 +3,7 @@
 import cmd
 import sys
 import re
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -139,7 +140,8 @@ class HBNBCommand(cmd.Cmd):
                     v = v.strip('"').replace('\\', '').replace('_', ' ')
                     kwargs[k] = v
 
-        new_instance = HBNBCommand.classes[args[0]](**kwargs)
+        new_instance = self.classes[args[0]](**kwargs)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
 
@@ -150,31 +152,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """ Method to show an individual object """
-        new = args.partition(" ")
-        c_name = new[0]
-        c_id = new[2]
-
-        # guard against trailing args
-        if c_id and ' ' in c_id:
-            c_id = c_id.partition(' ')[0]
-
-        if not c_name:
+        args = shlex.split(args)
+        if len(args) == 0:
             print("** class name missing **")
-            return
-
-        if c_name not in HBNBCommand.classes:
+            return False
+        if args[0] in self.classes:
+            if len(args) > 1:
+                key = args[0] + "." + args[1]
+                if key in storage.all(self.classes[args[0]]):
+                    print(storage.all()[key])
+                else:
+                    print("** no instance found **")
+            else:
+                print("** instance id missing **")
+        else:
             print("** class doesn't exist **")
-            return
-
-        if not c_id:
-            print("** instance id missing **")
-            return
-
-        key = c_name + "." + c_id
-        try:
-            print(storage._FileStorage__objects[key])
-        except KeyError:
-            print("** no instance found **")
 
     def help_show(self):
         """ Help information for the show command """
@@ -216,21 +208,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+        args = shlex.split(args)
+        obj_list = []
+        if len(args) == 0:
+            obj_dict = storage.all()
+        elif args[0] in self.classes:
+            obj_dict = storage.all(self.classes[args[0]])
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+            print("** class doesn't exist **")
+            return False
+        for key in obj_dict:
+            obj_list.append(str(obj_dict[key]))
 
-        print(print_list)
+        print(obj_list)
 
     def help_all(self):
         """ Help information for the all command """
