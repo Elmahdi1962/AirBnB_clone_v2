@@ -145,8 +145,7 @@ class HBNBCommand(cmd.Cmd):
         for k in ktd:
             del(kwargs[k])
         new_instance = self.classes[args[0]](**kwargs)
-        storage.new(new_instance)
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
