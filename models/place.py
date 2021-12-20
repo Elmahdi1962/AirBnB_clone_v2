@@ -2,7 +2,6 @@
 """ Place Module for HBNB project """
 
 from models.amenity import Amenity
-from models.review import Review
 from models.base_model import BaseModel, Base
 from models import storage_type
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
