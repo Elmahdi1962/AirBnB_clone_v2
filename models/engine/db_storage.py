@@ -33,7 +33,7 @@ class DBStorage:
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}:3306/{}'.format(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
                                            HBNB_MYSQL_USER,
                                            HBNB_MYSQL_PWD,
                                            HBNB_MYSQL_HOST,
@@ -61,8 +61,12 @@ class DBStorage:
 
     def new(self, obj):
         '''adds the obj to the current db session'''
-        self.__session.add(obj)
-
+        if obj is not None:
+            try:
+                self.__session.add(obj)
+            except Exception as ex:
+                self.__session.rollback()
+                raise ex
 
     def save(self):
         '''commit all changes of the current db session'''
