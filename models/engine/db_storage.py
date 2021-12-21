@@ -59,8 +59,12 @@ class DBStorage:
 
     def new(self, obj):
         '''adds the obj to the current db session'''
-        self.__session.add(obj)
-
+        if obj is not None:
+            try:
+                self.__session.add(obj)
+            except Exception as ex:
+                self.__session.rollback()
+                raise ex
 
     def save(self):
         '''commit all changes of the current db session'''
