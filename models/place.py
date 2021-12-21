@@ -78,7 +78,7 @@ class Place(BaseModel, Base):
             all_amens = storage.all(Amenity)
             lst = []
             for amen in all_amens.values():
-                if amen.id in self.amenity_ids:
+                if amen.id not in self.amenity_ids:
                     lst.append(amen)
             return lst
 
