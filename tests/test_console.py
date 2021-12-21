@@ -279,3 +279,21 @@ class TestHBNBCommand(unittest.TestCase):
                 "'name': 'Basketball court'",
                 cout.getvalue()
             )
+
+    def test_create_with_kwargs_fsv2(self):
+        ''' tests the create method of the console
+            using the kwargs feature using filestorage
+        '''
+        with patch('sys.stdout', new=StringIO()) as cout:
+            cons = HBNBCommand()
+            # create a user using kwargs
+            cons.onecmd('create User email="test@email.com" password=12345' +
+                        ' first_name="big_john"')
+            user_id = cout.getvalue().strip()
+            clear_stream(cout)
+            cons.onecmd('show User ' + user_id)
+            user_info = cout.getvalue().strip()
+            self.assertIn("'first_name': 'big john'", user_info)
+            self.assertIn("'email': 'test@email.com'", user_info)
+            self.assertIn("'password': 12345", user_info)
+            clear_stream(cout)

@@ -65,8 +65,8 @@ class TestBaseModel(TestCase):
         obj = BaseModel(**obj_dict)
         self.assertEqual(obj.id, obj_dict['id'])
         # datetime parsing
-        self.assertEqual(obj.created_at, now)
-        self.assertEqual(obj.updated_at, now)
+        self.assertEqual(obj.created_at.isoformat(), now)
+        self.assertEqual(obj.updated_at.isoformat(), now)
         # __class__ should not be added as an attribute
         self.assertFalse('__class__' in obj.__dict__)
 
@@ -109,6 +109,6 @@ class TestBaseModel(TestCase):
 
         self.assertEqual(old_ctm, obj.created_at)
         self.assertNotEqual(old_utm, obj.updated_at)
-        self.assertEqual(nobj.updated_at, obj.updated_at.isoformat())
+        self.assertEqual(nobj.updated_at, obj.updated_at)
         obj.updated_at = nobj.updated_at
         self.assertEqual(obj.to_dict(), nobj.to_dict())
