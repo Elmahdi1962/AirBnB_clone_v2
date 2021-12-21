@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 from models.amenity import Amenity
-from models.base_model import Base, BaseModel
+from models.base_model import Base
 from models.city import City
 from models.place import Place, place_amenity
 from models.review import Review
@@ -83,4 +83,5 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        self.__session = scoped_session(session_factory)()
+        Session = scoped_session(session_factory)
+        self.__session = Session
