@@ -12,7 +12,8 @@ from models import storage
 from models.base_model import BaseModel
 from tests import clear_stream
 
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'console test not supported')
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
@@ -295,5 +296,8 @@ class TestHBNBCommand(unittest.TestCase):
             user_info = cout.getvalue().strip()
             self.assertIn("'first_name': 'big john'", user_info)
             self.assertIn("'email': 'test@email.com'", user_info)
-            self.assertIn("'password': 12345", user_info)
+            if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+                self.assertIn("'password': '12345'", user_info)
+            else:
+                self.assertIn("'password': 12345", user_info)
             clear_stream(cout)

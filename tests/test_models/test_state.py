@@ -1,19 +1,22 @@
 #!/usr/bin/python3
-''' module for state tests '''
-from unittest import TestCase
-import json
-import re
-from uuid import UUID, uuid4
-from datetime import datetime
-from time import sleep
-
-from models.base_model import BaseModel
+""" """
+from tests.test_models.test_base_model import test_basemodel
 from models.state import State
+import os
 
 
-class TestState(TestCase):
-    ''' tests State class '''
-    def test_9(self):
-        ''' task 9 tests '''
-        self.assertTrue(issubclass(State, BaseModel))
-        self.assertEqual(State.name, '')
+class test_state(test_basemodel):
+    """ """
+
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = "State"
+        self.value = State
+
+    def test_name3(self):
+        """ """
+        new = self.value()
+        self.assertEqual(type(new.name), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))

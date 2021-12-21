@@ -1,20 +1,29 @@
 #!/usr/bin/python3
-''' module for city tests '''
-from unittest import TestCase
-import json
-import re
-from uuid import UUID, uuid4
-from datetime import datetime
-from time import sleep
-
-from models.base_model import BaseModel
+""" """
+from tests.test_models.test_base_model import test_basemodel
 from models.city import City
+import os
 
 
-class TestCity(TestCase):
-    ''' tests City class '''
-    def test_9(self):
-        ''' task 9 tests '''
-        self.assertTrue(issubclass(City, BaseModel))
-        self.assertEqual(City.state_id, '')
-        self.assertEqual(City.name, '')
+class test_City(test_basemodel):
+    """ """
+
+    def __init__(self, *args, **kwargs):
+        """ """
+        super().__init__(*args, **kwargs)
+        self.name = "City"
+        self.value = City
+
+    def test_state_id(self):
+        """ """
+        new = self.value()
+        self.assertEqual(type(new.state_id), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))
+
+    def test_name(self):
+        """ """
+        new = self.value()
+        self.assertEqual(type(new.name), str if
+                         os.getenv('HBNB_TYPE_STORAGE') != 'db' else
+                         type(None))
