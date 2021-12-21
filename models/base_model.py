@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DATETIME
 from models import storage_type
 
 Base = declarative_base()
@@ -21,10 +21,10 @@ class BaseModel:
                 nullable=False,
                 primary_key=True,
                 unique=True)
-    created_at = Column(DateTime,
+    created_at = Column(DATETIME,
                         nullable=False,
                         default=datetime.utcnow())
-    updated_at = Column(DateTime,
+    updated_at = Column(DATETIME,
                         nullable=False,
                         default=datetime.utcnow())
 
