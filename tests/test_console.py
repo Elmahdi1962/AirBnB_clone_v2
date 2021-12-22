@@ -6,9 +6,6 @@ import os
 import unittest
 from io import StringIO
 from unittest.mock import patch
-import MySQLdb
-import sqlalchemy
-from models.user import User
 from console import HBNBCommand
 from models import storage
 from models.base_model import BaseModel
@@ -49,7 +46,8 @@ class TestHBNBCommand(unittest.TestCase):
                 cons.onecmd('quit')
             self.assertEqual(ex.exception.code, 0)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_console_v_0_1 not supported in db storage')
     def test_console_v_0_1(self):
         """Tests the features of version 0.1 of the console.
         """
@@ -149,7 +147,8 @@ class TestHBNBCommand(unittest.TestCase):
             )
         # endregion
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_user not supported in db storage')
     def test_user(self):
         """Tests the show, create, destroy, update, and all
         commands with a User model.
@@ -185,7 +184,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd('show User {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), '** no instance found **\n')
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class_all not supported in db storage')
     def test_class_all(self):
         """Tests the ClassName.all() feature.
         """
@@ -199,7 +199,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class_count not supported in db storage')
     def test_class_count(self):
         """Tests the ClassName.count() feature.
         """
@@ -218,7 +219,8 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(cout.getvalue(), "2\n")
             self.assertTrue(int(cout.getvalue()) >= 0)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class_show not supported in db storage')
     def test_class_show(self):
         """Tests the ClassName.show(id) feature.
         """
@@ -232,7 +234,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class_destroy not supported in db storage')
     def test_class_destroy(self):
         """Tests the ClassName.destroy(id) feature.
         """
@@ -248,7 +251,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd('show City {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), "** no instance found **\n")
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class__update_0 not supported in db storage')
     def test_class_update_0(self):
         """Tests the ClassName.update(id, attr_name, attr_value) feature.
         """
@@ -269,7 +273,8 @@ class TestHBNBCommand(unittest.TestCase):
                 cout.getvalue()
             )
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     'test_class_update_1 not supported in db storage')
     def test_class_update_1(self):
         """Tests the ClassName.update(id, dict_repr) feature.
         """
@@ -310,3 +315,27 @@ class TestHBNBCommand(unittest.TestCase):
             else:
                 self.assertIn("'password': 12345", user_info)
             clear_stream(cout)
+
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db',
+        'test_fs_create not supported in db storage')
+    def test_fs_create(self):
+        """Tests the create command with the file storage.
+        """
+        with patch('sys.stdout', new=StringIO()) as cout:
+            cons = HBNBCommand()
+            cons.onecmd('create City name="Texas"')
+            mdl_id = cout.getvalue().strip()
+            clear_stream(cout)
+            self.assertIn('City.{}'.format(mdl_id), storage.all().keys())
+            cons.onecmd('show City {}'.format(mdl_id))
+            self.assertIn("'name': 'Texas'", cout.getvalue().strip())
+            clear_stream(cout)
+            cons.onecmd('create User name="James" age=17 height=5.9')
+            mdl_id = cout.getvalue().strip()
+            self.assertIn('User.{}'.format(mdl_id), storage.all().keys())
+            clear_stream(cout)
+            cons.onecmd('show User {}'.format(mdl_id))
+            self.assertIn("'name': 'James'", cout.getvalue().strip())
+            self.assertIn("'age': 17", cout.getvalue().strip())
+            self.assertIn("'height': 5.9", cout.getvalue().strip())
