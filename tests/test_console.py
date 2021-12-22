@@ -145,7 +145,6 @@ class TestHBNBCommand(unittest.TestCase):
             cursor.close()
             dbc.close()
 
-
     def test_console_v_0_0_1(self):
         """Tests the features of version 0.0.1 of the console.
         """
