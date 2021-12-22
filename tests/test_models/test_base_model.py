@@ -10,19 +10,20 @@ import os
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                  'basemodel test not supported')
 class test_basemodel(unittest.TestCase):
-    """ """
+    """ test class for base_model class"""
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init the test class of basemodel"""
         super().__init__(*args, **kwargs)
         self.name = 'BaseModel'
         self.value = BaseModel
 
     def setUp(self):
-        """ """
+        """ the set up method of the test class"""
         pass
 
     def tearDown(self):
+        """the teardown method of the ctest class"""
         try:
             os.remove('file.json')
         except Exception:
@@ -38,19 +39,19 @@ class test_basemodel(unittest.TestCase):
             self.assertNotIsInstance(self.value(), Base)
 
     def test_default(self):
-        """ """
+        """ default testing of basemodel"""
         i = self.value()
         self.assertEqual(type(i), self.value)
 
     def test_kwargs(self):
-        """ """
+        """ testing basemodel with kwargs"""
         i = self.value()
         copy = i.to_dict()
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
     def test_kwargs_int(self):
-        """ """
+        """ testing with kwargs again but with int kwargs"""
         i = self.value()
         copy = i.to_dict()
         copy.update({1: 2})
@@ -58,7 +59,7 @@ class test_basemodel(unittest.TestCase):
             new = BaseModel(**copy)
 
     def test_save(self):
-        """ Testing save """
+        """ Testing save metthod"""
         i = self.value()
         i.save()
         key = self.name + "." + i.id
@@ -67,13 +68,13 @@ class test_basemodel(unittest.TestCase):
             self.assertEqual(j[key], i.to_dict())
 
     def test_str(self):
-        """ """
+        """ testing the str method of themodel"""
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
 
     def test_todict(self):
-        """ """
+        """ testing the to_dict method"""
         i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
@@ -142,29 +143,29 @@ class test_basemodel(unittest.TestCase):
         self.assertNotIn('_sa_instance_state', n)
 
     def test_kwargs_none(self):
-        """ """
+        """ testing kwargs again with none"""
         n = {None: None}
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
     def test_kwargs_one(self):
-        """ """
+        """ testing kwargs with one arg"""
         n = {'name': 'test'}
         new = self.value(**n)
         self.assertEqual(new.name, n['name'])
 
     def test_id(self):
-        """ """
+        """ testing id attr of the model"""
         new = self.value()
         self.assertEqual(type(new.id), str)
 
     def test_created_at(self):
-        """ """
+        """ testing created at attr"""
         new = self.value()
         self.assertEqual(type(new.created_at), datetime)
 
     def test_updated_at(self):
-        """ """
+        """ testing updated at attr"""
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime)
         n = new.to_dict()
