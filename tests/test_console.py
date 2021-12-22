@@ -12,8 +12,7 @@ from models import storage
 from models.base_model import BaseModel
 from tests import clear_stream
 
-#@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-#                 'console test not supported')
+
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
@@ -48,6 +47,8 @@ class TestHBNBCommand(unittest.TestCase):
                 cons.onecmd('quit')
             self.assertEqual(ex.exception.code, 0)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_console_v_0_1 not supported in db storage')
     def test_console_v_0_1(self):
         """Tests the features of version 0.1 of the console.
         """
@@ -147,6 +148,8 @@ class TestHBNBCommand(unittest.TestCase):
             )
         # endregion
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_user not supported in db storage')
     def test_user(self):
         """Tests the show, create, destroy, update, and all
         commands with a User model.
@@ -182,6 +185,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd('show User {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), '** no instance found **\n')
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class_all not supported in db storage')
     def test_class_all(self):
         """Tests the ClassName.all() feature.
         """
@@ -195,6 +200,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class_count not supported in db storage')
     def test_class_count(self):
         """Tests the ClassName.count() feature.
         """
@@ -213,6 +220,8 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(cout.getvalue(), "2\n")
             self.assertTrue(int(cout.getvalue()) >= 0)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class_show not supported in db storage')
     def test_class_show(self):
         """Tests the ClassName.show(id) feature.
         """
@@ -226,6 +235,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class_destroy not supported in db storage')
     def test_class_destroy(self):
         """Tests the ClassName.destroy(id) feature.
         """
@@ -241,6 +252,8 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd('show City {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), "** no instance found **\n")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class__update_0 not supported in db storage')
     def test_class_update_0(self):
         """Tests the ClassName.update(id, attr_name, attr_value) feature.
         """
@@ -261,6 +274,8 @@ class TestHBNBCommand(unittest.TestCase):
                 cout.getvalue()
             )
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'test_class_update_1 not supported in db storage')
     def test_class_update_1(self):
         """Tests the ClassName.update(id, dict_repr) feature.
         """
