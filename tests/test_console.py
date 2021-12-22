@@ -8,6 +8,8 @@ from io import StringIO
 from unittest.mock import patch
 import MySQLdb
 import sqlalchemy
+from sqlalchemy import sql
+from sqlalchemy.exc import SQLAlchemyError
 from models.user import User
 from console import HBNBCommand
 from models import storage
@@ -49,7 +51,7 @@ class TestHBNBCommand(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as cout:
             cons = HBNBCommand()
             # creating a model with non-null attribute(s)
-            with self.assertRaises(Exception):
+            with self.assertRaises(sqlalchemy.exc.OperationalError):
                 cons.onecmd('create User')
             # creating a User instance
             clear_stream(cout)
