@@ -12,8 +12,8 @@ from models import storage
 from models.base_model import BaseModel
 from tests import clear_stream
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 'console test not supported')
+#@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+#                 'console test not supported')
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
