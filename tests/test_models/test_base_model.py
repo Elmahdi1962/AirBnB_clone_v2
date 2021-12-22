@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 import unittest
 import datetime
 from uuid import UUID
@@ -27,6 +27,15 @@ class test_basemodel(unittest.TestCase):
             os.remove('file.json')
         except Exception:
             pass
+
+    def test_init(self):
+        """Tests the initialization of the model class.
+        """
+        self.assertIsInstance(self.value(), BaseModel)
+        if self.value is not BaseModel:
+            self.assertIsInstance(self.value(), Base)
+        else:
+            self.assertNotIsInstance(self.value(), Base)
 
     def test_default(self):
         """ """
