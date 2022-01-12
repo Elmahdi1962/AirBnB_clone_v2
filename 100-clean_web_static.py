@@ -34,7 +34,10 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
 
-    file_name = re.search(r'versions/(\S+).tgz', archive_path).group(1)
+    file_name = re.search(r'versions/(\S+).tgz', archive_path)
+    if file_name is None:
+        return False
+    file_name = file_name.group(1)
     res = put(local_path=archive_path, remote_path="/tmp/{}.tgz"
               .format(file_name))
     if res.failed:
