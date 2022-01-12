@@ -24,13 +24,15 @@ def do_pack():
         return None
     return result
 
+
 def do_deploy(archive_path):
     '''distributes an archive to my web servers'''
     if not path.exists(archive_path):
         return False
-    
+
     file_name = re.search(r'versions/(\S+).tgz').group(1)
-    res = put(local_path=archive_path, remote_path="/tmp/{}.tgz".format(file_name))
+    res = put(local_path=archive_path, remote_path="/tmp/{}.tgz"
+              .format(file_name))
     if res.failed:
         return False
 
@@ -47,13 +49,14 @@ def do_deploy(archive_path):
     if res.failed:
         return False
 
-    res = run('mv data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/'
-             .format(file_name, file_name))
+    res = run('mv data/web_static/releases/{}/web_static/* ' +
+              '/data/web_static/releases/{}/'
+              .format(file_name, file_name))
     if res.failed:
         return False
 
     res = run('rm -rf data/web_static/releases/{}/web_static'
-             .format(file_name))
+              .format(file_name))
     if res.failed:
         return False
 
