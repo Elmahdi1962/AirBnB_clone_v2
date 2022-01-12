@@ -7,12 +7,13 @@ mkdir -p /data/web_static/
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
 echo "<h1>Test Page</h1>" > /data/web_static/releases/test/index.html
-if exist /data/web_static/current;
+if [ -d "/data/web_static/current" ];
 then
+    echo "path /data/web_static/current exists"
     rm -rf /data/web_static/current;
 fi;
-sudo ln -s /data/web_static/releases/test/ /data/web_static/current
-sudo chown -R ubuntu:ubuntu /data/
-sed -i "/server_name _;/a \\\n\tlocation /hbnb_static/ { \n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo chown -hR ubuntu:ubuntu /data
+sed -i "/server_name _;/a \\\n\tlocation /hbnb_static { \n\t\talias /data/web_static/current/;\n\t\tautoindex on;\n\t}" /etc/nginx/sites-available/default
+ln -sf '/etc/nginx/sites-available/default' '/etc/nginx/sites-enabled/default'
 sudo service nginx restart
-exit
