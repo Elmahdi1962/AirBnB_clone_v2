@@ -56,13 +56,13 @@ def do_deploy(archive_path):
     if res.failed:
         return False
 
-    res = run('mv data/web_static/releases/{}/web_static/* ' +
-              '/data/web_static/releases/{}/'
+    res = run(('mv /data/web_static/releases/{}/web_static/* ' +
+              '/data/web_static/releases/{}/')
               .format(file_name, file_name))
     if res.failed:
         return False
 
-    res = run('rm -rf data/web_static/releases/{}/web_static'
+    res = run('rm -rf /data/web_static/releases/{}/web_static'
               .format(file_name))
     if res.failed:
         return False
@@ -103,7 +103,7 @@ def do_clean(number=0):
     server_files_names = server_files.split("\n")
 
     for i in server_files_names[n:]:
-        if i is 'test':
+        if i == 'test':
             continue
         run("rm -rf /data/web_static/releases/{}"
             .format(i))
