@@ -8,7 +8,7 @@ mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
 echo "<h1>Test Page</h1>" > /data/web_static/releases/test/index.html
 if exist /data/web_static/current rm -rf /data/web_static/current
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo ln -s /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 sed -i "/server_name _;/a \\\n\tlocation /hbnb_static/ { \n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
 sudo service nginx restart
