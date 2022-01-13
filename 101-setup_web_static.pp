@@ -53,7 +53,7 @@ exec {'add new location /hbnb_static':
 }
 
 # link sites-enabled/default to sites-available/default
-exec {'link /current ot /test':
+exec {'link sites enabled to available':
   command  => 'sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default',
   provider => shell,
 }
