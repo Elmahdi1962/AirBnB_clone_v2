@@ -14,19 +14,6 @@ env.hosts = [
 ]
 
 
-@runs_once
-def do_pack():
-    '''generates a .tgz archive from the contents of the web_static folder'''
-    local("mkdir -p versions")
-    result = local("tar -cvzf versions/web_static_{}.tgz web_static"
-                   .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")),
-                   capture=True)
-
-    if result.failed:
-        return None
-    return result
-
-
 def do_deploy(archive_path):
     '''distributes an archive to my web servers'''
     if not path.exists(archive_path):
