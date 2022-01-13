@@ -7,10 +7,7 @@ import re
 from os import path
 
 
-env.hosts = [
-    '34.75.211.145',
-    '3.236.217.0'
-]
+env.hosts = ['34.75.211.145', '3.236.217.0']
 
 
 def do_pack():
