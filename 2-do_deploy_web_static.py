@@ -13,7 +13,7 @@ env.hosts = [
     '3.236.217.0'
 ]
 
-@runs_once()
+@runs_once
 def do_pack():
     '''generates a .tgz archive from the contents of the web_static folder'''
     local("mkdir -p versions")
