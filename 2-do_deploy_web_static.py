@@ -3,7 +3,7 @@
 
 from fabric.api import put, run, env
 import re
-from os import path
+from os.path import exists
 
 
 env.hosts = [
@@ -14,13 +14,10 @@ env.hosts = [
 
 def do_deploy(archive_path):
     '''distributes an archive to my web servers'''
-    if not path.exists(archive_path):
+    if not exists(archive_path):
         return False
     try:
-        file_name = re.search(r'versions/(\S+).tgz', archive_path)
-        if file_name is None:
-            return False
-        file_name = file_name.group(1)
+        file_name = archive_path.split("/")[-1].split(".")[0]
         put(local_path=archive_path, remote_path="/tmp/{}.tgz"
             .format(file_name))
 
