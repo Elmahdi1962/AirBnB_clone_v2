@@ -5,7 +5,7 @@ from fabric.api import put, run, env
 from os.path import exists
 
 
-env.hosts = ['142.44.167.228', '144.217.246.195']
+env.hosts = ['34.75.211.145', '3.236.217.0']
 
 
 def do_deploy(archive_path):
@@ -25,5 +25,5 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except Exception:
+    except:
         return False
