@@ -2,7 +2,6 @@
 '''fabric script for task 2 0X03'''
 
 from fabric.api import put, run, env
-import re
 from os.path import exists
 
 
