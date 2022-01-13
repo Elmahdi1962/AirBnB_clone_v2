@@ -1,5 +1,4 @@
 # puppet manifest sets up my web servers for the deployment 
-
 # update packages
 exec { 'apt-get-update':
   command  => 'apt-get -y update',
@@ -33,12 +32,6 @@ exec {'mkdir /shared':
 # create test inex file with temporary content
 exec {'create index.html':
   command  => 'echo "Set by puppet manifest of task 5 from project 0X03 AirBnB" > /data/web_static/releases/test/index.html',
-  provider => shell,
-}
-
-# delete current folder
-exec {'delete /current':
-  command  => 'rm -rf /data/web_static/current',
   provider => shell,
 }
 
