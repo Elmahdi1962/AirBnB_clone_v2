@@ -5,6 +5,8 @@ sudo apt-get -y install nginx
 ufw allow 'Nginx HTTP'
 mkdir -p /var/www/html
 sudo chmod -R 755 /var/www
+echo 'Hello World!' > /var/www/html/index.html
+echo -e "Ceci n\x27est pas une page" > /var/www/html/404.html
 mkdir -p /data/web_static/
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
