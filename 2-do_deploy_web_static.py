@@ -17,8 +17,7 @@ def do_deploy(archive_path):
         return False
     try:
         file_name = archive_path.split("/")[-1].split(".")[0]
-        put(local_path=archive_path, remote_path="/tmp/{}.tgz"
-            .format(file_name))
+        put(archive_path, "/tmp/")
 
         run("mkdir -p /data/web_static/releases/{}".format(file_name))
 
