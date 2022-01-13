@@ -13,7 +13,7 @@ env.hosts = [
 
 def do_deploy(archive_path):
     '''distributes an archive to my web servers'''
-    if not exists(archive_path):
+    if exists(archive_path) is False:
         return False
     try:
         file_n = archive_path.split("/")[-1]
@@ -28,5 +28,5 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except Exception:
+    except:
         return False
