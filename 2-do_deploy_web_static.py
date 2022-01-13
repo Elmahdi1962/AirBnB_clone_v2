@@ -2,6 +2,7 @@
 '''fabric script for task 2 0X03'''
 
 from fabric.api import local, put, run, env
+from fabric.decorators import runs_once
 from datetime import datetime
 import re
 from os import path
@@ -12,7 +13,7 @@ env.hosts = [
     '3.236.217.0'
 ]
 
-
+@runs_once()
 def do_pack():
     '''generates a .tgz archive from the contents of the web_static folder'''
     local("mkdir -p versions")
