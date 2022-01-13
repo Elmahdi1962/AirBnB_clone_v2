@@ -29,7 +29,7 @@ exec {'mkdir /shared':
 }
 
 # change owner of folder /date recursively
-exec {'chown /data recursively':
+exec {'chown-data':
   command  => 'sudo chown -hR ubuntu:ubuntu /data',
   provider => shell,
 }
@@ -40,6 +40,35 @@ exec {'create index.html':
   provider => shell,
 }
 
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  mode    => '0644',
+  owner   => 'www-data',
+  content =>
+"server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    index index.html index.htm;
+    error_page 404 /404.html;
+    add_header X-Served-By \$hostname;
+    location / {
+        root /var/www/html/;
+        try_files \$uri \$uri/ =404;
+    }
+    location /hbnb_static {
+        alias /data/web_static/current/;
+    }
+    if (\$request_filename ~ redirect_me){
+        rewrite ^ https://sketchfab.com/bluepeno/models permanent;
+    }
+    location = /404.html {
+        root /var/www/error/;
+        internal;
+    }
+}",
+}
+
 # link /current to /test
 exec {'link /current ot /test':
   command  => 'sudo ln -sf /data/web_static/releases/test /data/web_static/current',
@@ -47,10 +76,10 @@ exec {'link /current ot /test':
 }
 
 # add /hbnb_static location to nginx config
-exec {'add new location /hbnb_static':
-  command  => 'sudo sed -i "38i\ \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
-  provider => shell,
-}
+# exec {'add new location /hbnb_static':
+#  command  => 'sudo sed -i "38i\ \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
+#  provider => shell,
+# }
 
 # link sites-enabled/default to sites-available/default
 exec {'link sites enabled to available':
