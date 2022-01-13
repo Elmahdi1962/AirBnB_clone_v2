@@ -48,7 +48,7 @@ exec {'link /current ot /test':
 
 # add /hbnb_static location to nginx config
 exec {'add new location /hbnb_static':
-  command  => "sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default",
+  command  => 'sudo sed -i "38i\ \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
   provider => shell,
 }
 
