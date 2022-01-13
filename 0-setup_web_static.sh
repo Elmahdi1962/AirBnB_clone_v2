@@ -27,14 +27,14 @@ server {
                 try_files \$uri \$uri/ =404;
         }
 
-	location /hbnb_static/ { 
-		alias /data/web_static/current/;
-	}
+        location /hbnb_static/ { 
+            alias /data/web_static/current/;
+        }
 
         error_page 404 /404.html;
         location  /404.html {
             internal;
-	}
+	    }
 
         }
         
