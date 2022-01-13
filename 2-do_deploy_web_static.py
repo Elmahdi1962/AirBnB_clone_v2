@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 '''fabric script for task 2 0X03'''
 
-from fabric.api import local, put, run, env
-from fabric.decorators import runs_once
-from datetime import datetime
+from fabric.api import put, run, env
 import re
 from os import path
 
