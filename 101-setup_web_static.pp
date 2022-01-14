@@ -28,15 +28,15 @@ exec {'mkdir /shared':
   provider => shell,
 }
 
-# change owner of folder /date recursively
-exec {'chown-data':
-  command  => 'sudo chown -hR ubuntu:ubuntu /data',
-  provider => shell,
-}
-
 # create test inex file with temporary content
 exec {'create index.html':
   command  => 'echo "Set by puppet manifest of task 5 from project 0X03 AirBnB" > /data/web_static/releases/test/index.html',
+  provider => shell,
+}
+
+# change owner of folder /date recursively
+exec {'chown-data':
+  command  => 'sudo chown -hR ubuntu:ubuntu /data',
   provider => shell,
 }
 
