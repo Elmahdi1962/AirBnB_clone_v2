@@ -34,15 +34,15 @@ exec {'create index.html':
   provider => shell,
 }
 
-# link /current to /test
-exec {'link /current ot /test':
-  command  => 'sudo ln -sf /data/web_static/releases/test /data/web_static/current',
+# change owner of folder /date recursively
+exec {'chown-data':
+  command  => 'sudo chown -hR ubuntu:ubuntu /data; sudo chown -hR ubuntu:ubuntu /data/web_static/',
   provider => shell,
 }
 
-# change owner of folder /date recursively
-exec {'chown-data':
-  command  => 'sudo chown -hR ubuntu:ubuntu /data; sudo chown -hR ubuntu:ubuntu /data/web_static/; ; sudo chown -hR ubuntu:ubuntu /data/web_static/current',
+# link /current to /test
+exec {'link /current ot /test':
+  command  => 'sudo ln -sf /data/web_static/releases/test /data/web_static/current',
   provider => shell,
 }
 
