@@ -2,3 +2,4 @@
 test_params_create
 *.json
 main*.py
+*dump.sql
