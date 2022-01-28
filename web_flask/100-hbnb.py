@@ -86,7 +86,7 @@ def hbnb_filters():
 def hbnb():
     '''displaying index-8.html with data from  db'''
     states = storage.all(State).values()
-    amenities =  storage.all(Amenity).values()
+    amenities = storage.all(Amenity).values()
     places = storage.all(Place).values()
     return render_template('100-hbnb.html',
                            states=states,
