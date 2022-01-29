@@ -70,10 +70,10 @@ def cities_by_states():
 
 @app.route('/states', strict_slashes=False)
 @app.route('/states/<id>', strict_slashes=False)
-def states_by_id(id=0):
+def states_by_id(id='no id'):
     '''list states by there id and there cities or just states'''
     states = storage.all(State)
-    state_id = 'State.' + str(id) if len(states) > 0 else '9999999999999999'
+    state_id = 'State.' + str(id)
     return render_template('9-states.html', state_id=state_id, states=states)
 
 
