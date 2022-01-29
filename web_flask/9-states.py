@@ -85,8 +85,8 @@ def states_by_id(id=None):
         case = 1
         state = None
 
-    return render_template('9-states.html', state=state, states=states.values(),
-                            case=case)
+    return render_template('9-states.html', state=state,
+                           states=states.values(), case=case)
 
 
 @app.teardown_appcontext
