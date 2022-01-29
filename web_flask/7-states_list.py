@@ -57,7 +57,7 @@ def template_odd_even_Route(n):
 @app.route('/states_list', strict_slashes=False)
 def states_list():
     '''lists available states'''
-    states = storage.all(State)
+    states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
 
 
