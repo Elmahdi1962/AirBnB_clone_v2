@@ -64,7 +64,7 @@ def states_list():
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     '''lists available states with there cities'''
-    states = storage.all(State)
+    states = storage.all(State).values()
     return render_template('8-cities_by_states.html', states=states)
 
 
@@ -72,8 +72,8 @@ def cities_by_states():
 @app.route('/states/<id>', strict_slashes=False)
 def states_by_id(id=0):
     '''list states by there id and there cities or just states'''
-    state_id = 'State.' + str(id)
     states = storage.all(State)
+    state_id = 'State.' + str(id) if len(states) > 0 else '9999999999999999'
     return render_template('9-states.html', state_id=state_id, states=states)
 
 
